@@ -369,7 +369,7 @@ def plot_fitted_data(data, x, y):
 
 
 def main():
-df = pd.read_csv('/content/data.csv')
+df = pd.read_csv('data.csv')
     df = preprocessing(df)
     # Choose Latitude for statistical analysis
     col = 'Latitude'
