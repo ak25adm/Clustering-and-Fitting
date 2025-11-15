@@ -205,7 +205,7 @@ def writing(moments, col):
 
 def perform_clustering(df, col1, col2):
 
- def plot_elbow_method(scaled_data, max_k=10):
+    def plot_elbow_method(scaled_data, max_k=10):
         """
         Plot elbow method to determine optmal number of clusters.
         Parameters:
@@ -237,8 +237,7 @@ def perform_clustering(df, col1, col2):
       
         return inertias
 
-    def one_silhouette_inertia():
-    (scaled_data, k=3):
+    def one_silhouette_inertia(scaled_data, k=3):
         kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
         labels = kmeans.fit_predict(scaled_data)
         
@@ -369,7 +368,7 @@ def plot_fitted_data(data, x, y):
 
 
 def main():
-df = pd.read_csv('data.csv')
+    df = pd.read_csv('data.csv')
     df = preprocessing(df)
     # Choose Latitude for statistical analysis
     col = 'Latitude'
