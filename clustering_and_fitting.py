@@ -24,8 +24,7 @@ from sklearn.pipeline import make_pipeline
 def plot_relational_plot(df):
     """
     Create a relational plot showing the latitude vs the longitude of cities.
-    Parameters:
-    df (pd.DataFrame): DataFrame containing city data with coordinates
+    
     """
     fig, ax = plt.subplots(figsize=(12, 8))
     
@@ -42,7 +41,7 @@ def plot_relational_plot(df):
     ax.set_title('Geographical Distribution of Pakistani Cities')
     ax.grid(True, alpha=0.3)
     
-    # Add some major city labels
+    # Add major city labels
     major_cities = ['Karachi', 'Lahore', 'Islamabad', 'Quetta', 'Peshawar']
     for _, city in plot_data[plot_data['City'].isin(major_cities)].iterrows():
         ax.annotate(city['City'], (city['Longitude'], city['Latitude']),
@@ -57,21 +56,17 @@ def plot_relational_plot(df):
 
 def plot_categorical_plot(df):
     """
-    Create a categorical plot showing city distribution by province.
-    
-    Parameters:
-    df (pd.DataFrame): DataFrame containing city data with province information
+    Create a categorical plot showing distribution of city by province.
     """
     fig, ax = plt.subplots(figsize=(12, 8))
     
-    # Count cities by province, excluding missing values
     province_counts = df['Province/State'].value_counts().head(10)
     
     # Create horizontal bar plot
     bars = ax.barh(province_counts.index, province_counts.values, 
                    color='skyblue', edgecolor='navy', alpha=0.8)
     
-    # Add value labels on bars
+    # Add labels values on bars
     for i, bar in enumerate(bars):
         width = bar.get_width()
         ax.text(width + 0.1, bar.get_y() + bar.get_height()/2, 
@@ -92,16 +87,14 @@ def plot_categorical_plot(df):
 def plot_statistical_plot(df):
     """
     Create a statistical plot showing distribution of coordinates.
-   
-    Parameters:
-    df (pd.DataFrame): DataFrame containing city coordinate data
+ 
     """
     fig, axes = plt.subplots(1, 2, figsize=(15, 6))
     
     # Filter data
     plot_data = df.dropna(subset=['Latitude', 'Longitude'])
     
-    # Latitude distribution
+    # Lat distribution
     axes[0].hist(plot_data['Latitude'], bins=15, color='lightcoral', 
                 alpha=0.7, edgecolor='darkred')
     axes[0].set_xlabel('Latitude')
@@ -109,7 +102,7 @@ def plot_statistical_plot(df):
     axes[0].set_title('Distribution of Latitude Values')
     axes[0].grid(True, alpha=0.3)
     
-    # Longitude distribution
+    # Long distribution
     axes[1].hist(plot_data['Longitude'], bins=15, color='lightgreen', 
                 alpha=0.7, edgecolor='darkgreen')
     axes[1].set_xlabel('Longitude')
@@ -128,7 +121,7 @@ def statistical_analysis(df, col: str):
     """
     Calculate statistical moments for a given column.
     """
-    # Remove missing values
+    # Remove any missing values
     data = df[col].dropna()
 
     mean = np.mean(data)
@@ -140,7 +133,7 @@ def statistical_analysis(df, col: str):
 
 
 def preprocessing(df):
-    # You should preprocess your data in this function and
+    # preprocess data here and
     # make use of quick features such as 'describe', 'head/tail' and 'corr'.
     print("Dataset Shape:", df.shape)
     print("\nFirst 5 rows:")
@@ -155,7 +148,6 @@ def preprocessing(df):
     print("\nMissing Values:")
     print(df.isnull().sum())
     
-    # Clean the Population column - convert to numeric, handle errors
     df['Population'] = pd.to_numeric(df['Population'], errors='coerce')
     
     # Clean numeric columns
@@ -207,12 +199,8 @@ def perform_clustering(df, col1, col2):
 
     def plot_elbow_method(scaled_data, max_k=10):
         """
-        Plot elbow method to determine optmal number of clusters.
-        Parameters:
-        scaled_data (np.array): Scaled data for clustering
-        max_k (int): Maximum number of clusters for test
-        Returns:
-        list: Inertia values for each k
+        Plot elbow method to determine optimal number of clusters.
+      
         """
 
         inertias = []
@@ -251,7 +239,7 @@ def perform_clustering(df, col1, col2):
     scaler = StandardScaler()
     scaled_data = scaler.fit_transform(data)
     
-    # Find best number of clusters using elbow method
+    # Find the best number of clusters using the elbow method
     inertias = plot_elbow_method(scaled_data)
     
     # Calculate silhouette scores for different k values
@@ -287,7 +275,7 @@ def perform_clustering(df, col1, col2):
 def plot_clustered_data(labels, data, xkmeans, ykmeans, centre_labels):
     fig, ax = plt.subplots(figsize=(12, 8))
     
-    # Create scatter plot with different colors for each cluster
+    # Create scatter plot using different colors for each cluster
     scatter = ax.scatter(data[:, 0], data[:, 1], c=labels, 
                         cmap='viridis', alpha=0.7, s=60, 
                         edgecolors='black', linewidth=0.5)
@@ -384,7 +372,6 @@ def main():
     fitting_results = perform_fitting(df, 'Longitude', 'Latitude')
     plot_fitted_data(*fitting_results)
     return
-
-
+ 
 if __name__ == '__main__':
     main()
